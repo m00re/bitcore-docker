@@ -11,7 +11,7 @@ based on Alpine Linux.
 ## Available Docker Images at DockerHub
 
 Image Name                   | Tag        | BWS Version | Node.js Version | NPM Version
------------------------------|------------|-------------|------------------------------
+-----------------------------|------------|-------------|-----------------|------------
 m00re/bitcore-wallet-service | 1.17.0     | 1.17.0      | 4.8.3           | 2.15.12
 
 See also https://hub.docker.com/r/m00re/bitcore-wallet-service/
