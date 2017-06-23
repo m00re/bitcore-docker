@@ -36,6 +36,12 @@ RUN apt-get -y remove --purge build-essential && \
     apt-get -y clean
 USER node
 
+# Apply bugfixes
+COPY patches/01-fix-insight-apiprefix.patch /home/node/bitcore/node_modules/bitcore-wallet-service/01-fix-insight-apiprefix.patch
+RUN cd /home/node/bitcore/node_modules/bitcore-wallet-service && \
+    patch -p1 < /home/node/bitcore/node_modules/bitcore-wallet-service/01-fix-insight-apiprefix.patch && \
+    rm -f /home/node/bitcore/node_modules/bitcore-wallet-service/01-fix-insight-apiprefix.patch
+
 # Define environment variables through which the container can be fine-tuned
 ENV BITCOIND_DATA_DIR="/home/node/bitcoind" \
     BITCOIND_MAX_UPLOAD_TARGET=144 \

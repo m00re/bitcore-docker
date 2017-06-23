@@ -22,6 +22,7 @@ if [ ! -f ${BITCOIND_CONFIG} ]; then
     echo "rpcallowip=127.0.0.1" >> ${BITCOIND_CONFIG}
     echo "rpcuser=bitcoin" >> ${BITCOIND_CONFIG}
     echo "rpcpassword=local321" >> ${BITCOIND_CONFIG}
+    echo "rpcworkqueue=128" >> ${BITCOIND_CONFIG}
     echo "maxuploadtarget=${BITCOIND_MAX_UPLOAD_TARGET}" >> ${BITCOIND_CONFIG}
     echo "uacomment=bitcore" >> ${BITCOIND_CONFIG}
 
@@ -46,8 +47,12 @@ if [ ! -f ${BITCORE_NODE_CONFIG} ]; then
     echo "        \"exec\": \"/home/node/bitcore/node_modules/bitcore-node/bin/bitcoind\"" >> ${BITCORE_NODE_CONFIG}
     echo "      }" >> ${BITCORE_NODE_CONFIG}
     echo "    }," >> ${BITCORE_NODE_CONFIG}
+    echo "    \"web\": {" >> ${BITCORE_NODE_CONFIG}
+    echo "      \"jsonRequestLimit\": \"200kb\"" >> ${BITCORE_NODE_CONFIG}
+    echo "    }," >> ${BITCORE_NODE_CONFIG}
     echo "    \"insight-api\": {" >> ${BITCORE_NODE_CONFIG}
-    echo "      \"routePrefix\": \"api\"," >> ${BITCORE_NODE_CONFIG}
+    echo "      \"disableRateLimiter\": true," >> ${BITCORE_NODE_CONFIG}
+    echo "      \"routePrefix\": \"insight-api\"," >> ${BITCORE_NODE_CONFIG}
     echo "      \"enableCache\": true" >> ${BITCORE_NODE_CONFIG}
     echo "    }" >> ${BITCORE_NODE_CONFIG}
     echo "  }" >> ${BITCORE_NODE_CONFIG}
@@ -84,7 +89,7 @@ echo "      url: 'http://127.0.0.1:3001'" >> ${BITCORE_WALLET_CONFIG}
 echo "    }," >> ${BITCORE_WALLET_CONFIG}
 echo "    testnet: {" >> ${BITCORE_WALLET_CONFIG}
 echo "      provider: 'insight'," >> ${BITCORE_WALLET_CONFIG}
-echo "      url: 'http://127.0.0.1:3001/'" >> ${BITCORE_WALLET_CONFIG}
+echo "      url: 'http://127.0.0.1:3001'" >> ${BITCORE_WALLET_CONFIG}
 echo "    }" >> ${BITCORE_WALLET_CONFIG}
 echo "  }" >> ${BITCORE_WALLET_CONFIG}
 echo "};" >> ${BITCORE_WALLET_CONFIG}
