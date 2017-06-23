@@ -3,7 +3,7 @@ MAINTAINER Jens Mittag <kontakt@jensmittag.de>
 
 # Version configuration
 ARG BITCORE_NODE_VERSION=3.1.3
-ARG BITCORE_LIB_VERSION=0.13.19
+ARG BITCORE_LIB_VERSION=0.14.0
 ARG INSIGHT_API_VERSION=0.4.3
 ARG WALLET_SERVICE_VERSION=1.17.0
 
@@ -26,6 +26,7 @@ RUN npm install insight-api@$INSIGHT_API_VERSION && \
 #   "More than one instance of bitcore-lib found. Please make sure to require bitcore-lib and check that submodules do
 #   not also include their own bitcore-lib dependency."
 RUN rm -Rf /home/node/bitcore/node_modules/bitcore-node/node_modules/bitcore-lib
+RUN rm -Rf /home/node/bitcore/node_modules/insight-api/node_modules/bitcore-lib
 RUN rm -Rf /home/node/bitcore/node_modules/bitcore-wallet-service/node_modules/bitcore-lib
 
 # Finally remove unnecessary packages again

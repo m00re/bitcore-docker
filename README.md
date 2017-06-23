@@ -5,9 +5,10 @@ based on the official node Docker image. It includes a Bitcore full node setup (
 
 ## Available Docker Images at DockerHub
 
-Image Name    | Tag       | Bitcore-Node | Insight API | Wallet Service | Node.js | NPM
---------------|-----------|--------------|-------------|----------------|---------|---------
-m00re/bitcore | 3.1.3     | 3.1.3        | 0.4.3       | 1.17.0         | 4.8.3   | 2.15.11
+Image Name    | Tag       | Bitcore-Node | Insight API | Wallet Service | Bitcore-Lib | Node.js | NPM
+--------------|-----------|--------------|-------------|----------------|-------------|---------|---------
+m00re/bitcore | 3.1.3-b2  | 3.1.3        | 0.4.3       | 1.17.0         | 0.14.0      | 4.8.3   | 2.15.11 
+m00re/bitcore | 3.1.3     | 3.1.3        | 0.4.3       | 1.17.0         | 0.13.19     | 4.8.3   | 2.15.11 
 
 See also https://hub.docker.com/r/m00re/bitcore/
  
@@ -93,7 +94,7 @@ You can easily rebuild the image for other versions of Bitcore. Simply run
 ```
 docker build . -t <YourTageHere> \
   --build-arg BITCORE_NODE_VERSION=3.1.3 \
-  --build-arg BITCORE_LIB_VERSION=0.13.19 \
+  --build-arg BITCORE_LIB_VERSION=0.14.0 \
   --build-arg INSIGHT_API_VERSION=0.4.3 \
   --build-arg WALLET_SERVICE_VERSION=1.17.0
 ```
