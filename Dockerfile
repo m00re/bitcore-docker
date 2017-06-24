@@ -6,6 +6,7 @@ ARG BITCORE_NODE_VERSION=3.1.3
 ARG BITCORE_LIB_VERSION=0.14.0
 ARG INSIGHT_API_VERSION=0.4.3
 ARG WALLET_SERVICE_VERSION=1.17.0
+ARG BITCOIND_RPC_VERSION=0.7.0
 
 # Install required dependencies
 RUN apt-get update
@@ -21,11 +22,13 @@ RUN npm install bitcore-node@$BITCORE_NODE_VERSION && \
     npm install bitcore-lib@$BITCORE_LIB_VERSION
 RUN npm install insight-api@$INSIGHT_API_VERSION && \
     npm install bitcore-wallet-service@$WALLET_SERVICE_VERSION
+RUN npm install bitcoind-rpc@$BITCOIND_RPC_VERSION
 
 # Remove duplicate node_module 'bitcore-lib' to prevent startup errors suchn as:
 #   "More than one instance of bitcore-lib found. Please make sure to require bitcore-lib and check that submodules do
 #   not also include their own bitcore-lib dependency."
 RUN rm -Rf /home/node/bitcore/node_modules/bitcore-node/node_modules/bitcore-lib
+RUN rm -Rf /home/node/bitcore/node_modules/bitcore-node/node_modules/bitcoind-rpc
 RUN rm -Rf /home/node/bitcore/node_modules/insight-api/node_modules/bitcore-lib
 RUN rm -Rf /home/node/bitcore/node_modules/bitcore-wallet-service/node_modules/bitcore-lib
 
@@ -41,6 +44,15 @@ COPY patches/01-fix-insight-apiprefix.patch /home/node/bitcore/node_modules/bitc
 RUN cd /home/node/bitcore/node_modules/bitcore-wallet-service && \
     patch -p1 < /home/node/bitcore/node_modules/bitcore-wallet-service/01-fix-insight-apiprefix.patch && \
     rm -f /home/node/bitcore/node_modules/bitcore-wallet-service/01-fix-insight-apiprefix.patch
+COPY patches/02-blockchainmonitor-no-testnet-log.patch /home/node/bitcore/node_modules/bitcore-wallet-service/02-blockchainmonitor-no-testnet-log.patch
+RUN cd /home/node/bitcore/node_modules/bitcore-wallet-service && \
+    patch -p1 < /home/node/bitcore/node_modules/bitcore-wallet-service/02-blockchainmonitor-no-testnet-log.patch && \
+    rm -f /home/node/bitcore/node_modules/bitcore-wallet-service/02-blockchainmonitor-no-testnet-log.patch
+COPY patches/03-bitcoind-rpc-queuing.patch /home/node/bitcore/node_modules/bitcoind-rpc/03-bitcoind-rpc-queuing.patch
+RUN cd /home/node/bitcore/node_modules/bitcoind-rpc && \
+    patch -p1 < /home/node/bitcore/node_modules/bitcoind-rpc/03-bitcoind-rpc-queuing.patch && \
+    npm install && \
+    rm -f /home/node/bitcore/node_modules/bitcoind-rpc/03-bitcoind-rpc-queuing.patch
 
 # Define environment variables through which the container can be fine-tuned
 ENV BITCOIND_DATA_DIR="/home/node/bitcoind" \

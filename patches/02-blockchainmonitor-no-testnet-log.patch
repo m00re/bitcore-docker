@@ -1,0 +1,15 @@
+diff --git a/lib/blockchainmonitor.js b/lib/blockchainmonitor.js
+index 60a76fe..5a3e428 100644
+--- a/lib/blockchainmonitor.js
++++ b/lib/blockchainmonitor.js
+@@ -83,7 +83,9 @@ BlockchainMonitor.prototype._initExplorer = function(network, explorer) {
+     socket.emit('subscribe', 'inv');
+   });
+   socket.on('connect_error', function() {
+-    log.error('Error connecting to ' + explorer.getConnectionInfo());
++    if (network === 'livenet') {
++        log.error('Error connecting to ' + explorer.getConnectionInfo());
++    }
+   });
+   socket.on('tx', _.bind(self._handleIncomingTx, self));
+   socket.on('block', _.bind(self._handleNewBlock, self, network));

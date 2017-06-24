@@ -52,6 +52,9 @@ if [ ! -f ${BITCORE_NODE_CONFIG} ]; then
     echo "    }," >> ${BITCORE_NODE_CONFIG}
     echo "    \"insight-api\": {" >> ${BITCORE_NODE_CONFIG}
     echo "      \"disableRateLimiter\": true," >> ${BITCORE_NODE_CONFIG}
+    echo "      \"rateLimiterOptions\": {"  >> ${BITCORE_NODE_CONFIG}
+    echo "        \"whitelist\": [\"::ffff:127.0.0.1\"]" >> ${BITCORE_NODE_CONFIG}
+    echo "      }", >> ${BITCORE_NODE_CONFIG}
     echo "      \"routePrefix\": \"insight-api\"," >> ${BITCORE_NODE_CONFIG}
     echo "      \"enableCache\": true" >> ${BITCORE_NODE_CONFIG}
     echo "    }" >> ${BITCORE_NODE_CONFIG}

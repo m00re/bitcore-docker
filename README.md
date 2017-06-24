@@ -79,8 +79,8 @@ is stored in the Mongo DB instance, which of course should be configured to use 
 
 The Bitcore node is running the following services, which can be access as described below:
 
- - Insight-API: listening on port ```3001```, accessible via HTTP below path ```/api```. A typical request would be 
- something like ```GET /api/block/000000000000025c6e6f528c89419877ee26c28f860fa31866d443d9f951ad91```. It is however not 
+ - Insight-API: listening on port ```3001```, accessible via HTTP below path ```/insight-api```. A typical request would be 
+ something like ```GET /insight-api/block/000000000000025c6e6f528c89419877ee26c28f860fa31866d443d9f951ad91```. It is however not 
  necessary to expose port 3001 to the host system if you only want to use the wallet service.
  - BitCore wallet service: listening on port ```3232``` and accessible via HTTP below context root ```/```. To use the
   service by clients such as [Copay](https://github.com/bitpay/copay), configure the wallet endpoint to e.g. 
@@ -96,7 +96,8 @@ docker build . -t <YourTageHere> \
   --build-arg BITCORE_NODE_VERSION=3.1.3 \
   --build-arg BITCORE_LIB_VERSION=0.14.0 \
   --build-arg INSIGHT_API_VERSION=0.4.3 \
-  --build-arg WALLET_SERVICE_VERSION=1.17.0
+  --build-arg WALLET_SERVICE_VERSION=1.17.0 \
+  --build-arg BITCOIND_RPC_VERSION=0.7.0
 ```
 
 to build your own image.
